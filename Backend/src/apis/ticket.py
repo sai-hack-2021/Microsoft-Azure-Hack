@@ -236,7 +236,7 @@ class getTicketHistory(Resource):
 
             final = []
 
-            for i in collection.find({"user_id":int(payload['user_id'])}):
+            for i in collection.find({"user_id":int(payload['user_id'])}).sort([('currentDate',-1)]):
 
                 i['ticket_id'] = i.pop('_id')
                 final.append(i)

@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { getRequest, postRequest } from "../common/api.js";
 
+import style from "../common/style";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   profileSec: {
     display: "flex",
+    padding: "10px 0",
   },
   field: {
     width: "150px",
@@ -45,6 +48,38 @@ const Profile = () => {
           <div className={classes.field}>Name</div>
           <div className={classes.value}>{user.name}</div>
         </div>
+        <div className={classes.profileSec}>
+          <div className={classes.field}>Age</div>
+          <div className={classes.value}>{user.age}</div>
+        </div>
+        <div className={classes.profileSec}>
+          <div className={classes.field}>Gender</div>
+          <div className={classes.value}>{user.gender}</div>
+        </div>
+        {/* <div className={classes.profileSec}>
+          <div className={classes.field}>Status</div>
+          <div className={classes.value}>{user.latest_ticket.covid_class}</div>
+        </div> */}
+      </div>
+
+      <div className={classes.logout}>
+        <button
+          style={{
+            marginTop: "20px",
+            width: "200px",
+            background: style.secondary,
+            height: "40px",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            localStorage.clear();
+            window.location.href = "/";
+          }}
+        >
+          Log Out
+        </button>
       </div>
     </div>
   );
