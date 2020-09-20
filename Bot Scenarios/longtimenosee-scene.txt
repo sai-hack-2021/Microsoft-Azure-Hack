@@ -1,0 +1,301 @@
+{
+  "version": 3,
+  "steps": [
+    {
+      "id": "00d9113f54ac-0788154fdd96b5e6-8893",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 620,
+        "yLocation": 27,
+        "next": "b08ae9ebca7c-cc98feed2cb35c60-f843"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "'/Users/'+scenario.scenarioArgs.userId",
+      "urlParams": "",
+      "method": "get",
+      "headers": "{\r\n    'auth-key':'4ygdf5gthhyxx#45'\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "label": "find userDetails",
+      "response": "userData",
+      "error": "userData-Error"
+    },
+    {
+      "id": "b08ae9ebca7c-cc98feed2cb35c60-f843",
+      "type": "yesnoprompt",
+      "dataType": "boolean",
+      "designer": {
+        "xLocation": 624,
+        "yLocation": 136,
+        "next": "8488a02822e0-8ac0504529a7657c-ef20"
+      },
+      "text": "\"I see you have returned. \"+scenario.userData.name +\" Are you feeling better now?\"",
+      "variable": "userHealth",
+      "stringId": "stringId_e1c02783e220dfc5",
+      "targetStepId": "c99d2e88f637-b8663bb16e88ba08-0b1a"
+    },
+    {
+      "id": "c99d2e88f637-b8663bb16e88ba08-0b1a",
+      "type": "statement",
+      "designer": {
+        "xLocation": 786,
+        "yLocation": 200,
+        "next": "0f3102be0bed-290012cee27bd16c-1790"
+      },
+      "text": "\"I'm glad you're fine! I wish you good health and a great day ahead!\"",
+      "layout": "vertical",
+      "attachment": [
+        "conversation.resourcesUrl + \"/thanks.gif\""
+      ],
+      "stringId": "stringId_7b3302e45c417957"
+    },
+    {
+      "id": "0f3102be0bed-290012cee27bd16c-1790",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 787,
+        "yLocation": 271,
+        "next": "e5979669ca06-0f433bd89c2dd51e-61c0"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "\"/Tickets/status/update\"",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n  \"ticket_status\": \"closed\", //set to closed\r\n  \"monitoring_days\": 0\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "status_close_api",
+      "error": "status_close_api_error"
+    },
+    {
+      "id": "47af070b44d0-e65483b6b7c576ff-257f",
+      "type": "yesnoprompt",
+      "dataType": "boolean",
+      "designer": {
+        "xLocation": 508,
+        "yLocation": 260,
+        "next": "130e0cfa980c-4deb602de0a33fdc-04aa",
+        "reverse": true
+      },
+      "text": "\"Did your temperature increase or is higher than 102F?\"",
+      "variable": "feverhigh",
+      "stringId": "stringId_d7ffa03d2bf90838",
+      "label": "fev_severity",
+      "targetStepId": "2d658ea32068-c454e6c53d6fda02-385f"
+    },
+    {
+      "id": "8488a02822e0-8ac0504529a7657c-ef20",
+      "type": "statement",
+      "designer": {
+        "xLocation": 500,
+        "yLocation": 189,
+        "next": "47af070b44d0-e65483b6b7c576ff-257f"
+      },
+      "text": "\"So sorry to hear that. Can you answer the following so that we can evaluate you better?\"",
+      "stringId": "stringId_f4924983db5e8eff"
+    },
+    {
+      "id": "130e0cfa980c-4deb602de0a33fdc-04aa",
+      "type": "yesnoprompt",
+      "dataType": "boolean",
+      "designer": {
+        "xLocation": 591,
+        "yLocation": 311,
+        "reverse": true,
+        "next": "b84338e7034f-77d6e5162a66e866-9476"
+      },
+      "text": "\"Did you see any increase in severity of respiratory disorders you reported earlier?\"",
+      "variable": "rd_status",
+      "stringId": "stringId_07244637c8e1722b",
+      "label": "resp_sev",
+      "targetStepId": "2d658ea32068-c454e6c53d6fda02-385f"
+    },
+    {
+      "id": "b84338e7034f-77d6e5162a66e866-9476",
+      "type": "yesnoprompt",
+      "dataType": "boolean",
+      "designer": {
+        "xLocation": 651,
+        "yLocation": 371,
+        "reverse": true,
+        "next": "994d8f9e17bb-552893d01871242b-a4cc"
+      },
+      "text": "\"Did you see any rise/emergence in severity Gastrointestinal disorder like vomiting or diarrhea?\"",
+      "variable": "gi_status",
+      "stringId": "stringId_254437faad098cfa",
+      "label": "gi_severity",
+      "targetStepId": "2d658ea32068-c454e6c53d6fda02-385f"
+    },
+    {
+      "id": "e5979669ca06-0f433bd89c2dd51e-61c0",
+      "type": "endwithresult",
+      "designer": {
+        "xLocation": 540,
+        "yLocation": 600
+      },
+      "endScope": "scenario",
+      "returnValue": "{\r\n    \"ticket_id\":\"\",\r\n    \"ticket_status\":\"\"\r\n}",
+      "label": "Anth"
+    },
+    {
+      "id": "fdad224a1c6e-6fe7d5441e498821-c295",
+      "type": "action",
+      "label": "check for monitoring",
+      "designer": {
+        "xLocation": 730,
+        "yLocation": 460,
+        "next": "f87b08c6280e-4d9ac75ce25c8aa8-1b89"
+      },
+      "onInit": "ticket_creation = new Date(scenario.latest_ticket_info.latest_ticket.created_at)\r\nticket_current = new Date(scenario.latest_ticket_info.latest_ticket.currentDate)\r\n\r\n\r\nscenario.monitoring_end_date = ticket_creation\r\nscenario.monitoring_end_date.setDate(ticket_creation.getDate() + scenario.latest_ticket_info.latest_ticket.monitoring_day)\r\n\r\nif(ticket_current<scenario.monitoring_end_date) {\r\n    scenario.monitoring_statement = \"I think you still have some days left in monitoring. I don't see any of the symptoms alarming, but if you have doubts, I would recommend you to go for an external appointment\"\r\n    scenario.close_flag = false\r\n}\r\n\r\nelse if(ticket_current>=scenario.monitoring_end_date) {\r\n    scenario.close_flag = true\r\n}"
+    },
+    {
+      "id": "994d8f9e17bb-552893d01871242b-a4cc",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 734,
+        "yLocation": 367,
+        "next": "fdad224a1c6e-6fe7d5441e498821-c295"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "\"/Tickets/latest\"",
+      "urlParams": "",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "latest_ticket_info",
+      "error": "ticket_info_error",
+      "contentType": "raw",
+      "payload": "{\r\n    \"user_id\": parseInt(scenario.scenarioArgs.userId)\r\n}"
+    },
+    {
+      "id": "b9a63d708ac7-bb3fc21adbf56d52-4e30",
+      "type": "statement",
+      "designer": {
+        "xLocation": 360,
+        "yLocation": 480,
+        "next": "a694b22908a7-0452dac52e2727ad-f2a3"
+      },
+      "text": "\"I think your symptoms are alarming. Recommend you to consult an doctor and do an Covid-19 test at nearest ICMR center. routing you to appointments.\"",
+      "label": "",
+      "stringId": "stringId_936ce99a083e3efb",
+      "layout": "vertical",
+      "attachment": [
+        {
+          "type": "Carousel",
+          "carouselCode": "(function(){\n    return [\n       new builder.ThumbnailCard().title(\"Covid Testing Center: \"+scenario.clinicDetails.Nearest_Covid_Center).subtitle(\"Contact Number: \"+scenario.clinicDetails.Contact_Number).\n        text(\"Map link: \"+scenario.clinicDetails.Map_Link)\n    ] \n    })()\n"
+        }
+      ]
+    },
+    {
+      "id": "b3eae67bd5a1-771f7f5f4a775c18-202c",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 820,
+        "yLocation": 574,
+        "next": "e5979669ca06-0f433bd89c2dd51e-61c0"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/status/update",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"ticket_id\": scenario.userData.ticket_id,\r\n  \"ticket_status\": \"closed\",\r\n  \"monitoring_days\": scenario.latest_ticket_info.latest_ticket.monitoring_days\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "keep_monitoring",
+      "label": "Data Connection Call"
+    },
+    {
+      "id": "f87b08c6280e-4d9ac75ce25c8aa8-1b89",
+      "type": "branch",
+      "condition": "scenario.close_flag",
+      "designer": {
+        "xLocation": 872,
+        "yLocation": 460,
+        "reverse": true,
+        "next": "0f7a51097cef-25fea96d4a4dc18f-c02f"
+      },
+      "targetStepId": "b3eae67bd5a1-771f7f5f4a775c18-202c"
+    },
+    {
+      "id": "0f7a51097cef-25fea96d4a4dc18f-c02f",
+      "type": "statement",
+      "designer": {
+        "xLocation": 960,
+        "yLocation": 480,
+        "next": "e5979669ca06-0f433bd89c2dd51e-61c0"
+      },
+      "text": "\"\"+scenario.monitoring_statement",
+      "stringId": "stringId_daa6009e367608fe"
+    },
+    {
+      "id": "a694b22908a7-0452dac52e2727ad-f2a3",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 291,
+        "yLocation": 540,
+        "next": "bcb1c678eda4-4b0a368fc9eacc9f-c00b",
+        "errorStepId": "e5979669ca06-0f433bd89c2dd51e-61c0",
+        "reverse": true
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Appointment/add",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"type\": \"covid\",\r\n    \"date\": new Date().toString(),\r\n    \"time_slot\": \"now\"\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "appointment_book",
+      "error": "appointment_book_error",
+      "label": "Covid Book"
+    },
+    {
+      "id": "2d658ea32068-c454e6c53d6fda02-385f",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 393,
+        "yLocation": 420,
+        "next": "b9a63d708ac7-bb3fc21adbf56d52-4e30"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Appointment/list",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"type\": \"covid\",\r\n  \"ticket_id\": scenario.userData.active_ticket.ticket_id\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "clinicDetails",
+      "error": "clinicDetails_error",
+      "label": "clinic details"
+    },
+    {
+      "id": "bcb1c678eda4-4b0a368fc9eacc9f-c00b",
+      "type": "statement",
+      "designer": {
+        "xLocation": 326,
+        "yLocation": 588,
+        "next": "e5979669ca06-0f433bd89c2dd51e-61c0"
+      },
+      "text": "\"Your appointment is booked on the above center for today. Please visit.\"",
+      "label": "Booking success",
+      "stringId": "stringId_8a7064932713af7f"
+    }
+  ],
+  "interrupting": false,
+  "breaking": false,
+  "returningMessage": ""
+}

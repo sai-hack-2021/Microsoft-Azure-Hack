@@ -1,0 +1,885 @@
+{
+  "version": 3,
+  "steps": [
+    {
+      "id": "583d9f2991d9-d6e8b0f98daf64ca-0c31",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 380,
+        "yLocation": 0,
+        "reverse": true,
+        "next": "f8dcc32817a9-3e27d0fb366186f0-800b",
+        "errorStepId": "c47c49d8abd6-9d041e76bf3898c4-0ce0"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "'/Users/'+scenario.scenarioArgs.userId",
+      "urlParams": "",
+      "method": "get",
+      "headers": "{\r\n    'auth-key':'4ygdf5gthhyxx#45'\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "userData",
+      "label": "find username",
+      "error": "userData-Error"
+    },
+    {
+      "id": "2a413cb11c04-cd61e640859bd235-39f7",
+      "type": "prompt",
+      "dataType": "object",
+      "designer": {
+        "xLocation": 460,
+        "yLocation": 188,
+        "next": "ff517a7e4a7f-9f2fee251ccb8396-fd08"
+      },
+      "text": "\"Hey There \"+ scenario.userData.name +\" ! I'm Nurse Sushrut and ready to assist you. How are you feeling today? \"",
+      "variable": "complaint",
+      "label": "Complaint",
+      "stringId": "stringId_d77601961c9635db",
+      "suggestions": "",
+      "maxRetries": 3,
+      "layout": "vertical",
+      "attachment": [
+        {
+          "type": "AdaptiveCard",
+          "cardCode": "{\r\n  \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\",\r\n  \"type\": \"AdaptiveCard\",\r\n  \"version\": \"1.0\",\r\n  \"body\": [\r\n    {\r\n      \"type\": \"TextBlock\",\r\n      \"size\": \"small\",\r\n      \"weight\": \"bolder\",\r\n      \"text\": \"Health Complaints\",\r\n      \"horizontalAlignment\": \"left\"\r\n    },\r\n    \r\n    {\r\n      \"type\": \"Input.ChoiceSet\",\r\n      \"id\": \"complains\",\r\n      \"isMultiSelect\": true,\r\n      \"value\": \"1,3\",\r\n      \"choices\": [\r\n\r\n         {\r\n          \"title\": \"Body Pain (headache, weakness, jointpain, stiffness)\",\r\n          \"value\": \"body-pain\"\r\n        },\r\n         {\r\n          \"title\": \"Fever\",\r\n          \"value\": \"fever\"\r\n        },\r\n        {\r\n          \"title\": \"Gastro-Intestinal Disorder (Diarrhea, Vomiting)\",\r\n          \"value\": \"gi-disorder\"\r\n        },\r\n        {\r\n          \"title\": \"Respiratory Disorder (cough, breathing issue, sneezing, sore throat)\",\r\n          \"value\": \"respiratory-disorder\"\r\n        },\r\n        {\r\n          \"title\": \"Urine infection (irritation during urinating)\",\r\n          \"value\": \"urine-infection\"\r\n        },\r\n        {\r\n          \"title\": \"Rashes or Allergies\",\r\n          \"value\": \"allergies\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"actions\": [\r\n    {\r\n      \"type\": \"Action.Submit\",\r\n      \"title\": \"Submit\",\r\n      \"data\": {\r\n        \"id\": \"123234345\"\r\n      }\r\n    }\r\n  ]\r\n}\r\n"
+        }
+      ]
+    },
+    {
+      "id": "5a0e6b8d3384-cdde6ffa8ff8e0ef-2d53",
+      "type": "action",
+      "label": "Action",
+      "designer": {
+        "xLocation": 480,
+        "yLocation": 288,
+        "next": "b86e903b0308-8b2fe4bfd8b8257c-1b37"
+      },
+      "onInit": "/*\n * Use the following variable notation:\n * \n * scenario.var = scenario local variables\n * user.var = user data variables\n * conversation.var = global conversation variables\n * \n * Available object to use in the code:\n * require, session, moment, builder, underscore\n * \n * Hit 'Ctrl + Space' for autocomplete\n * \n * Example: scenario.welcomeMessage = \"Hello \" + scenario.name\n*/\nif(scenario.complaint.complains){\n    scenario.complaint.complains = scenario.complaint.complains.split(\",\")\n}\nif (scenario.risk_factors.riskfactors){\n    scenario.complaint.comorbidities = scenario.risk_factors.riskfactors.split(\",\")   \n}\n\nscenario.complaint.symptoms = {}\nscenario.complaint.symptoms.days_since_onset = scenario.onset\n\ndelete scenario.risk_factors\n\ndelete scenario.risk_factors\n\n"
+    },
+    {
+      "id": "6fb4ba63832f-10e7df1b39528aed-e94d",
+      "type": "prompt",
+      "dataType": "object",
+      "designer": {
+        "xLocation": 393,
+        "yLocation": 280,
+        "next": "cd4b66c0528c-e0c3157a38313c6f-361b"
+      },
+      "text": "\"I'm sorry to hear that. Do you have any of the following risk factors/Co-morbidities? (select all that apply or select none) \"",
+      "variable": "risk_factors",
+      "submitTitle": "Submit",
+      "layout": "vertical",
+      "attachment": [
+        {
+          "type": "AdaptiveCard",
+          "cardCode": "{\n  \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\",\n  \"type\": \"AdaptiveCard\",\n  \"version\": \"1.0\",\n  \"body\": [\n    {\n      \"type\": \"TextBlock\",\n      \"size\": \"small\",\n      \"weight\": \"bolder\",\n      \"text\": \"Medical history\",\n      \"horizontalAlignment\": \"left\"\n    },\n    \n    {\n      \"type\": \"Input.ChoiceSet\",\n      \"id\": \"riskfactors\",\n      \"isMultiSelect\": true,\n      \"value\": \"1,3\",\n      \"choices\": [\n\n         {\n          \"title\": \"Cancer History\",\n          \"value\": \"cancer history\"\n        },\n         {\n          \"title\": \"Diabetes Type1/Type2 / Hyperglycemia / Hypoglycemia\",\n          \"value\": \"diabetes\"\n        },\n        {\n          \"title\": \"Hypertension - High Blood Pressure\",\n          \"value\": \"hypertension\"\n        },\n        {\n          \"title\": \"High cholesterol\",\n          \"value\": \"high cholesterol\"\n        },\n        {\n          \"title\": \"Heart disease\",\n          \"value\": \"heart disease\"\n        },\n        {\n          \"title\": \"Physical Disease/Major Accident\",\n          \"value\": \"physical injury\"\n        },\n        {\n          \"title\": \"None of the above\",\n          \"value\": \"none\"\n        }\n      ]\n    }\n  ],\n  \"actions\": [\n    {\n      \"type\": \"Action.Submit\",\n      \"title\": \"Submit\",\n      \"data\": {\n        \"id\": \"1234567890\"\n      }\n    }\n  ]\n}\n"
+        }
+      ],
+      "stringId": "stringId_c4624e88b5ca0eda",
+      "label": "Comorbid?"
+    },
+    {
+      "id": "d120fa75892c-b111670f0a8baca7-15ca",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 780,
+        "yLocation": 800,
+        "next": "6077fd509095-543f886547e1780e-e0e5",
+        "reverse": false,
+        "errorStepId": "8fcb6d343579-aa73e6bd411c70d0-03d1"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/symptoms/update",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"symptoms\": scenario.complaint\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": true,
+      "label": "symptoms update",
+      "response": "symp_update_status",
+      "error": "symptoms-error"
+    },
+    {
+      "id": "c47c49d8abd6-9d041e76bf3898c4-0ce0",
+      "type": "statement",
+      "designer": {
+        "xLocation": 520,
+        "yLocation": 40
+      },
+      "text": "\"I think I didn't get your details right. Please refresh or try again.\"",
+      "stringId": "stringId_ed0c68b3645d2745",
+      "label": "bad Userid"
+    },
+    {
+      "id": "b86e903b0308-8b2fe4bfd8b8257c-1b37",
+      "type": "statement",
+      "designer": {
+        "xLocation": 460,
+        "yLocation": 389,
+        "next": "677d87301044-3ae0cdf45f241ce3-3fe9"
+      },
+      "text": "\"Thank you for the details. Let me assess the issues now. \"",
+      "stringId": "stringId_c4c287650bd6d174",
+      "layout": "vertical",
+      "attachment": [
+        "conversation.resourcesUrl + \"/im.gif\""
+      ]
+    },
+    {
+      "id": "7aab50525866-037c50a79a76f112-8d39",
+      "type": "statement",
+      "designer": {
+        "xLocation": 1100,
+        "yLocation": 892,
+        "next": "e56f5130041e-93c7f90c69708171-5ba7"
+      },
+      "text": "\"There was an issue with ticket update...\"",
+      "stringId": "stringId_9491c609f9a800e6",
+      "label": "symptom update error",
+      "layout": "vertical",
+      "attachment": [
+        "conversation.resourcesUrl + \"/oops.gif\""
+      ]
+    },
+    {
+      "id": "e1823ade6386-2ae34e2e84049068-004d",
+      "type": "action",
+      "label": "Assessment Trainer",
+      "designer": {
+        "xLocation": 660,
+        "yLocation": 349,
+        "next": "52f12b211b19-04600fe94294085e-9200"
+      },
+      "onInit": "//Urine infection\nscenario.complaint.symptoms.ui = scenario.complaint.complains.includes(\"urine-infection\") ? 1 : 0\n\n//Allergies\nscenario.complaint.symptoms.allergy = scenario.complaint.complains.includes(\"allergies\") ? 1 : 0\n\n//fever symptoms\nscenario.complaint.symptoms.fever = scenario.complaint.complains.includes(\"fever\") ? 1 : 0\n\nif(scenario.complaint.symptoms.fever === 1) {\n    scenario.complaint.symptoms.fever_temp = scenario.fever_temp.index\n    scenario.complaint.symptoms.fever_type = scenario.fever_type.index\n}\n\n//GI symptoms\nif(scenario.complaint.complains.includes(\"gi-disorder\")) {\n    for( x in scenario.gi_symptom){\n        ailment = scenario.gi_symptom[x].entity\n        if(ailment.toLowerCase() === \"vomiting\") ailment = \"vomit\"\n        else if(ailment.toLowerCase() === \"abdominal_pain\") ailment = \"abdominal_pain\"\n        eval(\"scenario.complaint.symptoms.\"+ailment+\" = \"+scenario.gi_symptom[0].score)\n    }\n\n    if (!scenario.complaint.symptoms.diarrhea)\n        scenario.complaint.symptoms.diarrhea = 0\n    if (!scenario.complaint.symptoms.vomit)\n        scenario.complaint.symptoms.vomit = 0\n    if (!scenario.complaint.symptoms.abdominal_pain)\n        scenario.complaint.symptoms.abdominal_pain = 0\n   \n}\n\n//Body Pain\nif(scenario.complaint.complains.includes(\"body-pain\")) {\n    scenario.complaint.symptoms.body_pain_type = scenario.bp_symptom.index // 5: None\n    scenario.complaint.symptoms.headache = (scenario.bp_headache) ? 1 : 0\n}\n\n\n//Respiratory disorder\nif(scenario.complaint.complains.includes(\"respiratory-disorder\")) {\n    \n    if(!scenario.rd_symptoms.rd_types.includes('cough'))\n        scenario.complaint.symptoms.cough = 0\n    else \n        scenario.complaint.symptoms.cough = scenario.cough_type.score + 1\n\n    scenario.complaint.symptoms.loss_of_smell_taste = scenario.rd_symptoms.rd_types.includes(\"senseless\") ? 1 : 0\n    scenario.complaint.symptoms.sore_throat = scenario.rd_symptoms.rd_types.includes(\"sore throat\") ? 1 : 0\n    scenario.complaint.symptoms.runny_nose = scenario.rd_symptoms.rd_types.includes(\"sneeze\") ? 1 : 0\n    var runny_nose = scenario.rd_symptoms.rd_types.includes(\"sneeze\") ? 1 : 0\n    scenario.complaint.symptoms.nose_block = scenario.rd_symptoms.rd_types.includes(\"nasal\") ? 1 : 0\n    var nose_block = scenario.rd_symptoms.rd_types.includes(\"nasal\") ? 1 : 0\n    scenario.complaint.symptoms.shortness_of_breath = scenario.rd_symptoms.rd_types.includes(\"sob\") ? 1 : 0\n\n    if((runny_nose === 0) && (nose_block === 0))\n        scenario.complaint.symptoms.cold = 0\n    else if((runny_nose === 1) && (nose_block === 0))\n        scenario.complaint.symptoms.cold = 1\n    else\n        scenario.complaint.symptoms.cold = 2\n}\n\n//symptom relief\nscenario.complaint.symptoms.medic_relief = (scenario.medication_improve) ? 1: 0\n\n//covid19 connection\nscenario.complaint.symptoms.covid_connect = (scenario.covid_connect) ? 1 : 0\n\n\n\n\n//clear space for effective resource consumption\n\ndelete scenario.fever_temp\ndelete scenario.fever_type\ndelete scenario.bp_headache\ndelete scenario.rd_symptoms\ndelete scenario.bp_symptom\ndelete scenario.covid_connect\ndelete scenario.gi_symptom\ndelete scenario.cough_type"
+    },
+    {
+      "id": "677d87301044-3ae0cdf45f241ce3-3fe9",
+      "type": "branch",
+      "condition": "scenario.complaint.complains.includes(\"fever\")",
+      "designer": {
+        "xLocation": 960,
+        "yLocation": 0,
+        "next": "0cde6aa9e0b6-b3c5304ec78ff2c2-a143"
+      },
+      "label": "Fever",
+      "targetStepId": "02a422a8bc28-08b371ffb8f4ea1a-74f4"
+    },
+    {
+      "id": "53bc680478b6-3296b518ac36c79c-16d7",
+      "type": "prompt",
+      "dataType": "[\"continuous fever\",\"fever with chills\",\"increase at night\"]",
+      "designer": {
+        "xLocation": 1040,
+        "yLocation": 60,
+        "next": "0cde6aa9e0b6-b3c5304ec78ff2c2-a143",
+        "listStyle": 3
+      },
+      "text": "\"How is your fever?\"",
+      "variable": "fever_type",
+      "submitTitle": "Submit",
+      "label": "Fever how?",
+      "suggestions": "",
+      "stringId": "stringId_d6699c2225d5a0f8",
+      "choiceType": "choice"
+    },
+    {
+      "id": "02a422a8bc28-08b371ffb8f4ea1a-74f4",
+      "type": "prompt",
+      "dataType": "[\"Not Measured\",\"Mild\", \"Moderate\", \"High\"]",
+      "designer": {
+        "xLocation": 1074,
+        "yLocation": 0,
+        "next": "53bc680478b6-3296b518ac36c79c-16d7",
+        "listStyle": 3
+      },
+      "text": "\"Have you measured your temperature? If yes, Can you rate it: (Specify Mild [98 F to 100 F], Moderate [100F to 102 F], High [ above 102 F ])\"",
+      "variable": "fever_temp",
+      "submitTitle": "Submit",
+      "suggestions": "",
+      "stringId": "stringId_082acc4e81e6ac36",
+      "label": "Fever Temp",
+      "choiceType": "choice",
+      "layout": "vertical"
+    },
+    {
+      "id": "39e5291929b1-60f3425d87cdaacd-54a7",
+      "type": "branch",
+      "condition": "scenario.complaint.complains.includes(\"respiratory-disorder\")",
+      "designer": {
+        "xLocation": 740,
+        "yLocation": 180,
+        "next": "83dd888e6c52-f39fca086f6e2b4f-a194"
+      },
+      "label": "RD?",
+      "targetStepId": "192bede092c4-8e2774dbcd46e34e-b09c"
+    },
+    {
+      "id": "192bede092c4-8e2774dbcd46e34e-b09c",
+      "type": "prompt",
+      "dataType": "object",
+      "designer": {
+        "xLocation": 800,
+        "yLocation": 240,
+        "next": "18566ce948c4-273cabdae6a2ab62-f2dc"
+      },
+      "text": "\"Okay, So which of the following respiratory ailments are you suffering from?\"",
+      "variable": "rd_symptoms",
+      "submitTitle": "Submit",
+      "label": "RD Type?",
+      "maxRetries": 3,
+      "stringId": "stringId_b8c19e6fb6def172",
+      "layout": "vertical",
+      "attachment": [
+        {
+          "type": "AdaptiveCard",
+          "cardCode": "{\r\n  \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\",\r\n  \"type\": \"AdaptiveCard\",\r\n  \"version\": \"1.0\",\r\n  \"body\": [\r\n    {\r\n      \"type\": \"TextBlock\",\r\n      \"size\": \"small\",\r\n      \"weight\": \"bolder\",\r\n      \"text\": \"Respiratory Ailments\",\r\n      \"horizontalAlignment\": \"left\"\r\n    },\r\n    \r\n    {\r\n      \"type\": \"Input.ChoiceSet\",\r\n      \"id\": \"rd_types\",\r\n      \"isMultiSelect\": true,\r\n      \"value\": \"1,3\",\r\n      \"choices\": [\r\n\r\n         {\r\n          \"title\": \"Cough\",\r\n          \"value\": \"cough\"\r\n        },\r\n         {\r\n          \"title\": \"Shortness of breath/ Breathing uneasiness\",\r\n          \"value\": \"sob\"\r\n        },\r\n        {\r\n          \"title\": \"Loss of Taste/Smell\",\r\n          \"value\": \"senseless\"\r\n        },\r\n        {\r\n          \"title\": \"Sneezing/Runny Nose\",\r\n          \"value\": \"sneeze\"\r\n        },\r\n        {\r\n          \"title\": \"Sore Throat\",\r\n          \"value\": \"sore throat\"\r\n        },\r\n        {\r\n          \"title\": \"Nasal Congestion\",\r\n          \"value\": \"nasal\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"actions\": [\r\n    {\r\n      \"type\": \"Action.Submit\",\r\n      \"title\": \"Submit\",\r\n      \"data\": {\r\n        \"id\": \"123428183\"\r\n      }\r\n    }\r\n  ]\r\n}\r\n"
+        }
+      ]
+    },
+    {
+      "id": "ff517a7e4a7f-9f2fee251ccb8396-fd08",
+      "type": "branch",
+      "condition": "(scenario.complaint) && (scenario.complaint.complains)  && (scenario.complaint.complains.split(\",\").includes(\"fever\") || scenario.complaint.complains.split(\",\").includes(\"respiratory-disorder\") || scenario.complaint.complains.split(\",\").includes(\"gi-disorder\") || scenario.complaint.complains.split(\",\").includes(\"body-pain\") || scenario.complaint.complains.split(\",\").includes(\"allergies\") || scenario.complaint.complains.split(\",\").includes(\"urine-infection\"))",
+      "designer": {
+        "xLocation": 234,
+        "yLocation": 280,
+        "next": "14de913d0dda-22dda664aebe54a0-0245"
+      },
+      "label": "symptom valid?",
+      "targetStepId": "6fb4ba63832f-10e7df1b39528aed-e94d"
+    },
+    {
+      "id": "14de913d0dda-22dda664aebe54a0-0245",
+      "type": "statement",
+      "designer": {
+        "xLocation": 267,
+        "yLocation": 214,
+        "next": "2a413cb11c04-cd61e640859bd235-39f7"
+      },
+      "text": "\"Sorry I can't quite understand that, let's try again...\"",
+      "stringId": "stringId_284c61c54baf147b",
+      "layout": "vertical",
+      "attachment": [
+        "conversation.resourcesUrl + \"/housemd_again.gif\""
+      ]
+    },
+    {
+      "id": "cd4b66c0528c-e0c3157a38313c6f-361b",
+      "type": "branch",
+      "condition": "(scenario.risk_factors) && (scenario.risk_factors.riskfactors) ",
+      "designer": {
+        "xLocation": 260,
+        "yLocation": 374,
+        "next": "b1b8d280503a-776615527a2a7417-7397"
+      },
+      "label": "comorbid validator",
+      "targetStepId": "6589136d248d-7746149649b1ba76-db0b"
+    },
+    {
+      "id": "b1b8d280503a-776615527a2a7417-7397",
+      "type": "statement",
+      "designer": {
+        "xLocation": 320,
+        "yLocation": 360,
+        "next": "6fb4ba63832f-10e7df1b39528aed-e94d"
+      },
+      "text": "\"Okay I didn't catch that well. Try again may be...\"",
+      "stringId": "stringId_c128a29aa8d65cbb"
+    },
+    {
+      "id": "300f4b1b47ee-4421955ff3d7da17-935e",
+      "type": "statement",
+      "designer": {
+        "xLocation": 908,
+        "yLocation": 220,
+        "next": "192bede092c4-8e2774dbcd46e34e-b09c"
+      },
+      "text": "\"Sorry, Can't seem to answer this...\"",
+      "stringId": "stringId_498d70158ea3ec01"
+    },
+    {
+      "id": "18566ce948c4-273cabdae6a2ab62-f2dc",
+      "type": "branch",
+      "condition": "(scenario.rd_symptoms) && (scenario.rd_symptoms.rd_types) ",
+      "designer": {
+        "xLocation": 954,
+        "yLocation": 272,
+        "next": "300f4b1b47ee-4421955ff3d7da17-935e",
+        "reverse": true
+      },
+      "label": "RD validator",
+      "targetStepId": "78c156d592c7-6c64926418f8df39-ca97"
+    },
+    {
+      "id": "0cde6aa9e0b6-b3c5304ec78ff2c2-a143",
+      "type": "branch",
+      "condition": "scenario.complaint.complains.includes(\"gi-disorder\")",
+      "designer": {
+        "xLocation": 880,
+        "yLocation": 40,
+        "next": "b0e029a1cbbc-1cf3918e99932ab0-9ca8"
+      },
+      "label": "GI?",
+      "targetStepId": "719e99815c1b-1e1aebbca8f66268-6be7"
+    },
+    {
+      "id": "719e99815c1b-1e1aebbca8f66268-6be7",
+      "type": "prompt",
+      "dataType": "[\"vomiting\", \"diarrhea\", \"abdominal_pain\"]",
+      "designer": {
+        "xLocation": 929,
+        "yLocation": 91,
+        "next": "b0e029a1cbbc-1cf3918e99932ab0-9ca8",
+        "listStyle": 5
+      },
+      "text": "\"What type of Gastric Intestinal Disorder are you facing?\"",
+      "variable": "gi_symptom",
+      "submitTitle": "Submit",
+      "suggestions": "",
+      "stringId": "stringId_8a82bbf6ab376523",
+      "label": "GI Type",
+      "choiceType": "multi-choice"
+    },
+    {
+      "id": "b0e029a1cbbc-1cf3918e99932ab0-9ca8",
+      "type": "branch",
+      "condition": "scenario.complaint.complains.includes(\"body-pain\")",
+      "designer": {
+        "xLocation": 800,
+        "yLocation": 100,
+        "next": "39e5291929b1-60f3425d87cdaacd-54a7"
+      },
+      "label": "Bodypain?",
+      "targetStepId": "34fc9987e313-35d0d4389f01a1da-f1c2"
+    },
+    {
+      "id": "34fc9987e313-35d0d4389f01a1da-f1c2",
+      "type": "prompt",
+      "dataType": "[\"Weakness & Fatigue\",\"Joint pain & Lower back pain\",\"Chestpain\",\"Stiffness & Swells\", \"None\"]",
+      "designer": {
+        "xLocation": 860,
+        "yLocation": 160,
+        "listStyle": 3,
+        "next": "2f52636bd30f-504f196149f80d70-0c10"
+      },
+      "variable": "bp_symptom",
+      "submitTitle": "Submit",
+      "label": "BodyPain",
+      "text": "\"It seems you're having bodypain. Can you specify the exact symptoms that match?\"",
+      "stringId": "stringId_1c58aa1b9774b84f",
+      "choiceType": "choice"
+    },
+    {
+      "id": "2f52636bd30f-504f196149f80d70-0c10",
+      "type": "prompt",
+      "dataType": "boolean",
+      "designer": {
+        "xLocation": 960,
+        "yLocation": 160,
+        "next": "39e5291929b1-60f3425d87cdaacd-54a7"
+      },
+      "text": "\"Do you have headache?\"",
+      "variable": "bp_headache",
+      "submitTitle": "Submit",
+      "label": "headache?",
+      "stringId": "stringId_0ec29e3e3f8e9f6e"
+    },
+    {
+      "id": "78c156d592c7-6c64926418f8df39-ca97",
+      "type": "branch",
+      "condition": "(scenario.rd_symptoms.rd_types.split(\",\").includes(\"cough\"))",
+      "designer": {
+        "xLocation": 867,
+        "yLocation": 280,
+        "next": "83dd888e6c52-f39fca086f6e2b4f-a194"
+      },
+      "label": "Cough?",
+      "targetStepId": "2ca2f4f59873-38e184f44cedf6d6-7e0e"
+    },
+    {
+      "id": "2ca2f4f59873-38e184f44cedf6d6-7e0e",
+      "type": "prompt",
+      "dataType": "[\"dry-cough\",\"sorethroat\",\"wet-cough with sputtum\"]",
+      "designer": {
+        "xLocation": 1040,
+        "yLocation": 368,
+        "listStyle": 3,
+        "next": "83dd888e6c52-f39fca086f6e2b4f-a194"
+      },
+      "text": "\"What was the type of cough?\"",
+      "variable": "cough_type",
+      "submitTitle": "Submit",
+      "stringId": "stringId_2a780b0eb41f2502",
+      "choiceType": "choice",
+      "suggestions": ""
+    },
+    {
+      "id": "e56f5130041e-93c7f90c69708171-5ba7",
+      "type": "endwithresult",
+      "designer": {
+        "xLocation": 600,
+        "yLocation": 1008
+      },
+      "endScope": "scenario",
+      "returnValue": "{}",
+      "label": "End"
+    },
+    {
+      "id": "2d9b852fffbd-d3b8b5b10f1a8636-79e7",
+      "type": "prompt",
+      "dataType": "boolean",
+      "designer": {
+        "xLocation": 820,
+        "yLocation": 400,
+        "next": "e1823ade6386-2ae34e2e84049068-004d"
+      },
+      "text": "### Do any of the following statements apply to you?\r\n- #### I was in contact with COVID19 positive patient in last 14 days.\r\n- #### I have travelled internationally or domestically from/to a High Risk Zone for COVID19.\r\n- #### I am an Healthcare/Frontline worker",
+      "variable": "covid_connect",
+      "submitTitle": "Submit",
+      "label": "CovidConnect",
+      "stringId": "stringId_581dee149761fb13"
+    },
+    {
+      "id": "f8dcc32817a9-3e27d0fb366186f0-800b",
+      "type": "switch",
+      "designer": {
+        "xLocation": 350,
+        "yLocation": 60,
+        "next": "2a413cb11c04-cd61e640859bd235-39f7"
+      },
+      "cases": [
+        {
+          "value": "monitoring",
+          "targetStepId": "6a28755b4e7b-4ca12aa7368bd280-e1b4"
+        },
+        {
+          "value": "consulting",
+          "targetStepId": "a7176469114e-13b1702de5391edc-dfd0"
+        },
+        {
+          "value": "open",
+          "targetStepId": "2a413cb11c04-cd61e640859bd235-39f7"
+        }
+      ],
+      "condition": "scenario.userData.active_ticket.ticket_status"
+    },
+    {
+      "id": "6a28755b4e7b-4ca12aa7368bd280-e1b4",
+      "type": "statement",
+      "designer": {
+        "xLocation": 153,
+        "yLocation": 40,
+        "next": "61b9d2a7456a-090f9a8d03c8f78d-7562"
+      },
+      "text": "Monitoring",
+      "stringId": "stringId_423e555c5ec3885f"
+    },
+    {
+      "id": "a7176469114e-13b1702de5391edc-dfd0",
+      "type": "statement",
+      "designer": {
+        "xLocation": 168,
+        "yLocation": 185,
+        "next": "bc8a804a3b47-ed83243b56f04e65-1789"
+      },
+      "text": "You have been assessed. - consultation",
+      "stringId": "stringId_56f3528c24fcb9e4",
+      "label": "consulting"
+    },
+    {
+      "id": "52f12b211b19-04600fe94294085e-9200",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 600,
+        "yLocation": 413,
+        "next": "638f03674748-e5e3ce82c7941e23-de9f",
+        "reverse": false,
+        "errorStepId": "fbb8de270293-ccca71db730a90b4-b217"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/symptoms/update",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"symptoms\": {\r\n        \"complaints\": scenario.complaint.complains,\r\n        \"co_morbitities\": scenario.complaint.comorbidities,\r\n        \"symptoms_info\": scenario.complaint.symptoms\r\n    }\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": true,
+      "label": "Detailed symptoms update",
+      "response": "symp_update_status2",
+      "error": "symptoms-error2"
+    },
+    {
+      "id": "fbb8de270293-ccca71db730a90b4-b217",
+      "type": "statement",
+      "designer": {
+        "xLocation": 572,
+        "yLocation": 260,
+        "next": "583d9f2991d9-d6e8b0f98daf64ca-0c31"
+      },
+      "text": "\"There was an issue with ticket update...\"",
+      "stringId": "stringId_9491c609f9a800e6",
+      "label": "symptom update error",
+      "layout": "vertical",
+      "attachment": [
+        "conversation.resourcesUrl + \"/oops.gif\""
+      ]
+    },
+    {
+      "id": "638f03674748-e5e3ce82c7941e23-de9f",
+      "type": "statement",
+      "designer": {
+        "xLocation": 600,
+        "yLocation": 473,
+        "next": "065bad8ecc8d-e370919606629965-1b5e"
+      },
+      "text": "\"Ticket Updated successfully. I'm processing your inputs for records and evaluating risks...\"\r\n",
+      "layout": "vertical",
+      "attachment": [
+        "conversation.resourcesUrl + \"/health.gif\""
+      ],
+      "stringId": "stringId_47ac00847ad269df",
+      "label": "Ticket updated"
+    },
+    {
+      "id": "83dd888e6c52-f39fca086f6e2b4f-a194",
+      "type": "prompt",
+      "dataType": "boolean",
+      "designer": {
+        "xLocation": 740,
+        "yLocation": 327,
+        "next": "2d9b852fffbd-d3b8b5b10f1a8636-79e7"
+      },
+      "text": "\"Are any of the above symptoms are decreasing using any medication/prescription since you have been experiencing them?\"",
+      "variable": "medication_improve",
+      "submitTitle": "Submit",
+      "stringId": "stringId_ca7dfcaa94d310f4",
+      "label": "medication_relief?"
+    },
+    {
+      "id": "6589136d248d-7746149649b1ba76-db0b",
+      "type": "prompt",
+      "dataType": "number",
+      "designer": {
+        "xLocation": 328,
+        "yLocation": 470,
+        "next": "5a0e6b8d3384-cdde6ffa8ff8e0ef-2d53"
+      },
+      "text": "\"Since how many days are you facing the symptoms from?\"",
+      "variable": "onset",
+      "submitTitle": "Submit",
+      "label": "Onset_days",
+      "stringId": "stringId_dbfd1e05f354066b"
+    },
+    {
+      "id": "61b9d2a7456a-090f9a8d03c8f78d-7562",
+      "type": "beginScenario",
+      "designer": {
+        "xLocation": 69,
+        "yLocation": 147
+      },
+      "scenario": "longtimenosee",
+      "args": "{\"userId\":scenario.userData.user_id}"
+    },
+    {
+      "id": "019b975fe260-23098dc376c9375f-9f3e",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 572,
+        "yLocation": 650,
+        "next": "9003cbbc87ca-37e416c7095293d0-9136",
+        "errorStepId": "b115eba0d821-28881fbc335ab7ca-c663"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Scoring/score",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"ticket_id\":scenario.userData.active_ticket.ticket_id\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "label": "covidClassifier",
+      "response": "class_covid_submit",
+      "error": "class_covid_submit-error"
+    },
+    {
+      "id": "4643001a38d6-30dd6439fd9872bb-4c34",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 193,
+        "yLocation": 120,
+        "reverse": false,
+        "errorStepId": "fbb8de270293-ccca71db730a90b4-b217"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/status/update",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"ticket_status\": \"in-progress\",\r\n    \"monitoring_days\": 0\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": true,
+      "label": "ticket status update",
+      "response": "symp_update_status2",
+      "error": "symptoms-error2"
+    },
+    {
+      "id": "2d9c6e960882-8454bbbb2c223767-293a",
+      "type": "beginScenario",
+      "designer": {
+        "xLocation": 360,
+        "yLocation": 880
+      },
+      "scenario": "sadtoseeyougo",
+      "args": "{\r\n    \"userId\":scenario.userData.user_id,\r\n    \"appointment_type\":scenario.appointment_type\r\n}",
+      "variable": ""
+    },
+    {
+      "id": "ce857f903551-8b273dd96b9da821-3288",
+      "type": "action",
+      "label": "Classification Action",
+      "designer": {
+        "xLocation": 773,
+        "yLocation": 634,
+        "next": "a8155a0bee10-b053da32b5021ea4-2d70"
+      },
+      "onInit": "scenario.appointment_type=\"\"\r\n\r\n\r\n\r\nswitch(scenario.class_covid_submit.covid_class) {\r\n    case 'High':\r\n        scenario.requireAppointment = true\r\n        scenario.appointment_type='covid'\r\n        scenario.appointment_diag=false\r\n\r\n    break;\r\n    case 'Medium':\r\n        scenario.requireAppointment = true\r\n        scenario.appointment_type='remote'\r\n        \r\n    break;\r\n\r\n    case 'Low':\r\n        if((scenario.complaint.symptoms.fever_temp === 3) && ((scenario.class_fever_submit.predicted_fever_class === 'Malarial') || (scenario.class_fever_submit.predicted_fever_class === 'Viral')) ){\r\n            scenario.requireAppointment = true\r\n            scenario.appointment_type=\"offline\"\r\n            \r\n        }\r\n        else if((scenario.complaint.symptoms.fever_temp === 3) && (scenario.class_fever_submit.predicted_fever_class === 'Bacterial')){\r\n            scenario.requireAppointment = true\r\n            scenario.appointment_type=\"diagnostic\"\r\n            \r\n        }\r\n        else {\r\n            scenario.requireAppointment = false\r\n            scenario.fev_classification_message=\"Mild symptoms detected. No appointment needed. Take care.\"\r\n        }\r\n\r\n    break;\r\n\r\n    default:\r\n        scenario.fev_classification_message=\"No classification required.\"\r\n}"
+    },
+    {
+      "id": "b115eba0d821-28881fbc335ab7ca-c663",
+      "type": "statement",
+      "designer": {
+        "xLocation": 420,
+        "yLocation": 720,
+        "next": "e56f5130041e-93c7f90c69708171-5ba7"
+      },
+      "text": "\"There was an issue with classification for covid...\"",
+      "stringId": "stringId_9491c609f9a800e6",
+      "label": "covid classifier error"
+    },
+    {
+      "id": "065bad8ecc8d-e370919606629965-1b5e",
+      "label": "Wait",
+      "type": "wait",
+      "designer": {
+        "xLocation": 600,
+        "yLocation": 520,
+        "next": "019b975fe260-23098dc376c9375f-9f3e"
+      },
+      "time": "2000"
+    },
+    {
+      "id": "bfea80e94249-a5f7f2e84aad1386-08ea",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 827,
+        "yLocation": 560,
+        "next": "ce857f903551-8b273dd96b9da821-3288",
+        "reverse": false,
+        "errorStepId": "b255051d3da5-22faf89272858b77-52c1"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Classifier/classify",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"ticket_id\": scenario.userData.active_ticket.ticket_id\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "class_fever_submit",
+      "error": "class_fever_submit-error",
+      "label": "Fever classification"
+    },
+    {
+      "id": "9003cbbc87ca-37e416c7095293d0-9136",
+      "type": "branch",
+      "condition": "(scenario.class_covid_submit.covid_class === \"Low\") && (scenario.complaint.symptoms.fever === 1)",
+      "designer": {
+        "xLocation": 809,
+        "yLocation": 480,
+        "next": "ce857f903551-8b273dd96b9da821-3288"
+      },
+      "targetStepId": "bfea80e94249-a5f7f2e84aad1386-08ea",
+      "label": "Low covid and fever?"
+    },
+    {
+      "id": "b255051d3da5-22faf89272858b77-52c1",
+      "type": "statement",
+      "designer": {
+        "xLocation": 680,
+        "yLocation": 640,
+        "next": "e56f5130041e-93c7f90c69708171-5ba7"
+      },
+      "text": "\"There was an issue with classification for covid...\"",
+      "stringId": "stringId_9491c609f9a800e6",
+      "label": "fever classifier error"
+    },
+    {
+      "id": "a8155a0bee10-b053da32b5021ea4-2d70",
+      "type": "branch",
+      "condition": "(scenario.class_covid_submit.covid_class === \"Low\") && (scenario.complaint.scenario.complaint.symptoms.fever === 0)",
+      "designer": {
+        "xLocation": 900,
+        "yLocation": 668,
+        "next": "fd1b13e85391-feddde08e2f2c2da-635d"
+      },
+      "label": "Low disposition check",
+      "targetStepId": "d90319ede71c-05dfecb14f43d1f1-c267"
+    },
+    {
+      "id": "d90319ede71c-05dfecb14f43d1f1-c267",
+      "type": "statement",
+      "designer": {
+        "xLocation": 1100,
+        "yLocation": 780,
+        "next": "e1531e3c1349-af359bdf95550d07-b0f4"
+      },
+      "text": "\"I feel you have a low dispostion at covid risk and also no serious fever symptoms. Would request you to take rest or get back when the severity of symptoms increases.\"",
+      "stringId": "stringId_e6d5749e74d1e9d0",
+      "label": "low disposition for Fever or covid"
+    },
+    {
+      "id": "e1531e3c1349-af359bdf95550d07-b0f4",
+      "type": "action",
+      "label": "Update covid status",
+      "designer": {
+        "xLocation": 940,
+        "yLocation": 772,
+        "next": "8755bcef68d7-06ebb922904bb754-1947"
+      },
+      "onInit": "scenario.complaint.symptoms.covid_status=\"Low Risk - No Fever\""
+    },
+    {
+      "id": "fd1b13e85391-feddde08e2f2c2da-635d",
+      "type": "action",
+      "label": "Update Covid status",
+      "designer": {
+        "xLocation": 800,
+        "yLocation": 720,
+        "next": "d120fa75892c-b111670f0a8baca7-15ca"
+      },
+      "onInit": "scenario.complaint.symptoms.covid_status = scenario.class_covid_submit.covid_class"
+    },
+    {
+      "id": "9b6495ce4132-bcf6ac15a9d68c8c-bf4f",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 840,
+        "yLocation": 873,
+        "next": "e56f5130041e-93c7f90c69708171-5ba7",
+        "errorStepId": "e56f5130041e-93c7f90c69708171-5ba7"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/status/update",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"ticket_id\": scenario.userData.ticket_id,\r\n  \"ticket_status\": \"closed\",\r\n  \"monitoring_days\": 0",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "response": "close_ticket",
+      "error": "close_ticket-error",
+      "label": "Close Ticket"
+    },
+    {
+      "id": "bc8a804a3b47-ed83243b56f04e65-1789",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 168,
+        "yLocation": 500,
+        "next": "fb9290b1d44e-e0ce836048991989-13c3"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/latest",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"user_id\":scenario.userData.user_id\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "label": "Fetch complaints",
+      "response": "latest_ticket_info",
+      "error": "latest_ticket_info-error"
+    },
+    {
+      "id": "fb9290b1d44e-e0ce836048991989-13c3",
+      "type": "action",
+      "label": "convert data to complaint",
+      "designer": {
+        "xLocation": 274,
+        "yLocation": 540,
+        "next": "019b975fe260-23098dc376c9375f-9f3e"
+      },
+      "onInit": "scenario.complaint = scenario.latest_ticket_info.latest_ticket.symptoms\r\nscenario.complaint.symptoms = scenario.complaint.symptoms_info\r\ndelete scenario.complaint.symptoms_info\r\nscenario.complaint.comorbidities = scenario.complaint.co_morbidities\r\ndelete scenario.complaint.comorbidities\r\n\r\ndelete scenario.latest_ticket_info"
+    },
+    {
+      "id": "6077fd509095-543f886547e1780e-e0e5",
+      "type": "statement",
+      "designer": {
+        "xLocation": 720,
+        "yLocation": 880,
+        "next": "2d9c6e960882-8454bbbb2c223767-293a"
+      },
+      "text": "appointment",
+      "stringId": "stringId_b1caa385c37f1fec"
+    },
+    {
+      "id": "8755bcef68d7-06ebb922904bb754-1947",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 953,
+        "yLocation": 860,
+        "next": "9b6495ce4132-bcf6ac15a9d68c8c-bf4f",
+        "reverse": true,
+        "errorStepId": "7aab50525866-037c50a79a76f112-8d39"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/symptoms/update",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"symptoms\": scenario.complaint\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": true,
+      "label": "symptoms update",
+      "response": "symp_update_status",
+      "error": "symptoms-error"
+    },
+    {
+      "id": "8fcb6d343579-aa73e6bd411c70d0-03d1",
+      "type": "statement",
+      "designer": {
+        "xLocation": 672,
+        "yLocation": 828,
+        "next": "e56f5130041e-93c7f90c69708171-5ba7"
+      },
+      "text": "\"There was an issue with ticket update...\"",
+      "stringId": "stringId_9491c609f9a800e6",
+      "label": "symptom update error",
+      "layout": "vertical",
+      "attachment": [
+        "conversation.resourcesUrl + \"/oops.gif\""
+      ]
+    }
+  ],
+  "interrupting": false,
+  "breaking": false,
+  "returningMessage": ""
+}
