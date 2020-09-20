@@ -139,7 +139,7 @@ const Login = () => {
             <div className={classes.leftText}>
               <h1>WELCOME BACK</h1>
               <p>Please login with your details to use our services</p>
-              <button onClick={switchSides}>Click Me</button>
+              {/* <button onClick={switchSides}>Click Me</button> */}
             </div>
           </div>
           <div className={`${classes.right} ${orderRight}`}>
