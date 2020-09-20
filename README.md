@@ -5,10 +5,11 @@
 	2. Remotely monitor the paitents who have medium covid risk and Low Fever during home quarantine.
 
 ## Components:
-The Platform  has overall 3 components : 
+The Platform  has overall 4 components : 
 1. Frontend : React JS - *Hosted over MS Azure Virtual Machine platform.*
 2. Backend  : Flask and MongoDB *API exposed on the virtual Machine platform*
 3. Machine Learning Module Exposed as Microservice *Over Azure Container Instances*
+4. Azure Bot Service: Forms the main interaction interface between the platform and the user. *built with Microsoft Healthcare Bot service*, It carefully collects and maps symptoms from users with much ease and coordinates between the various modules
 
 **[View PPT](https://docs.google.com/presentation/d/1sP5DyX1s9E5kvmUoth2lh8EyMEjZrIjPrn2puZU9S3c/edit?usp=sharing)** <br>
 **[View Platform](http://52.172.158.219/)**<br>
