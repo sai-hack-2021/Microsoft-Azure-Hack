@@ -1,0 +1,11 @@
+version: '2.0'
+
+services:
+  backend:
+    build: ./
+    ports:
+      - "8000:8000"
+    container_name: backend
+    environment:
+      - BOOT=FALSE
+      
