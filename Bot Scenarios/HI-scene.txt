@@ -83,8 +83,8 @@
       "id": "d120fa75892c-b111670f0a8baca7-15ca",
       "type": "datasource",
       "designer": {
-        "xLocation": 780,
-        "yLocation": 800,
+        "xLocation": 340,
+        "yLocation": 780,
         "next": "6077fd509095-543f886547e1780e-e0e5",
         "reverse": false,
         "errorStepId": "8fcb6d343579-aa73e6bd411c70d0-03d1"
@@ -133,8 +133,8 @@
       "id": "7aab50525866-037c50a79a76f112-8d39",
       "type": "statement",
       "designer": {
-        "xLocation": 1100,
-        "yLocation": 892,
+        "xLocation": 980,
+        "yLocation": 940,
         "next": "e56f5130041e-93c7f90c69708171-5ba7"
       },
       "text": "\"There was an issue with ticket update...\"",
@@ -507,7 +507,7 @@
       "contentType": "raw",
       "method": "post",
       "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
-      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"symptoms\": {\r\n        \"complaints\": scenario.complaint.complains,\r\n        \"co_morbitities\": scenario.complaint.comorbidities,\r\n        \"symptoms_info\": scenario.complaint.symptoms\r\n    }\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"symptoms\": {\r\n        \"complaints\": scenario.complaint.complains,\r\n        \"co_morbitities\": scenario.complaint.comorbidities,\r\n        \"symptoms\": scenario.complaint.symptoms\r\n    }\r\n}",
       "opJson": true,
       "opResolveWithFullResponse": true,
       "label": "Detailed symptoms update",
@@ -541,7 +541,7 @@
       "text": "\"Ticket Updated successfully. I'm processing your inputs for records and evaluating risks...\"\r\n",
       "layout": "vertical",
       "attachment": [
-        "conversation.resourcesUrl + \"/health.gif\""
+        "conversation.resourcesUrl + \"/im.gif\""
       ],
       "stringId": "stringId_47ac00847ad269df",
       "label": "Ticket updated"
@@ -590,8 +590,8 @@
       "id": "019b975fe260-23098dc376c9375f-9f3e",
       "type": "datasource",
       "designer": {
-        "xLocation": 572,
-        "yLocation": 650,
+        "xLocation": 469,
+        "yLocation": 600,
         "next": "9003cbbc87ca-37e416c7095293d0-9136",
         "errorStepId": "b115eba0d821-28881fbc335ab7ca-c663"
       },
@@ -610,34 +610,11 @@
       "error": "class_covid_submit-error"
     },
     {
-      "id": "4643001a38d6-30dd6439fd9872bb-4c34",
-      "type": "datasource",
-      "designer": {
-        "xLocation": 193,
-        "yLocation": 120,
-        "reverse": false,
-        "errorStepId": "fbb8de270293-ccca71db730a90b4-b217"
-      },
-      "dataConnection": "",
-      "urlBase": "'http://52.172.158.219:8000/api'",
-      "urlPath": "/Tickets/status/update",
-      "urlParams": "",
-      "contentType": "raw",
-      "method": "post",
-      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
-      "payload": "{\r\n    \"ticket_id\": scenario.userData.active_ticket.ticket_id,\r\n    \"ticket_status\": \"in-progress\",\r\n    \"monitoring_days\": 0\r\n}",
-      "opJson": true,
-      "opResolveWithFullResponse": true,
-      "label": "ticket status update",
-      "response": "symp_update_status2",
-      "error": "symptoms-error2"
-    },
-    {
       "id": "2d9c6e960882-8454bbbb2c223767-293a",
       "type": "beginScenario",
       "designer": {
-        "xLocation": 360,
-        "yLocation": 880
+        "xLocation": 320,
+        "yLocation": 920
       },
       "scenario": "sadtoseeyougo",
       "args": "{\r\n    \"userId\":scenario.userData.user_id,\r\n    \"appointment_type\":scenario.appointment_type\r\n}",
@@ -648,17 +625,17 @@
       "type": "action",
       "label": "Classification Action",
       "designer": {
-        "xLocation": 773,
-        "yLocation": 634,
+        "xLocation": 780,
+        "yLocation": 640,
         "next": "a8155a0bee10-b053da32b5021ea4-2d70"
       },
-      "onInit": "scenario.appointment_type=\"\"\r\n\r\n\r\n\r\nswitch(scenario.class_covid_submit.covid_class) {\r\n    case 'High':\r\n        scenario.requireAppointment = true\r\n        scenario.appointment_type='covid'\r\n        scenario.appointment_diag=false\r\n\r\n    break;\r\n    case 'Medium':\r\n        scenario.requireAppointment = true\r\n        scenario.appointment_type='remote'\r\n        \r\n    break;\r\n\r\n    case 'Low':\r\n        if((scenario.complaint.symptoms.fever_temp === 3) && ((scenario.class_fever_submit.predicted_fever_class === 'Malarial') || (scenario.class_fever_submit.predicted_fever_class === 'Viral')) ){\r\n            scenario.requireAppointment = true\r\n            scenario.appointment_type=\"offline\"\r\n            \r\n        }\r\n        else if((scenario.complaint.symptoms.fever_temp === 3) && (scenario.class_fever_submit.predicted_fever_class === 'Bacterial')){\r\n            scenario.requireAppointment = true\r\n            scenario.appointment_type=\"diagnostic\"\r\n            \r\n        }\r\n        else {\r\n            scenario.requireAppointment = false\r\n            scenario.fev_classification_message=\"Mild symptoms detected. No appointment needed. Take care.\"\r\n        }\r\n\r\n    break;\r\n\r\n    default:\r\n        scenario.fev_classification_message=\"No classification required.\"\r\n}"
+      "onInit": "scenario.appointment_type=\"\"\r\n\r\nswitch(scenario.class_covid_submit.covid_class) {\r\n    case 'High':\r\n        scenario.requireAppointment = true\r\n        scenario.appointment_type='covid'\r\n    break;\r\n    case 'Medium':\r\n        scenario.requireAppointment = true\r\n        scenario.appointment_type='remote'\r\n        \r\n    break;\r\n\r\n    case 'Low':\r\n        if((scenario.complaint.symptoms.fever_temp === 3) && ((scenario.class_fever_submit.predicted_fever_class === 'Malarial') || (scenario.class_fever_submit.predicted_fever_class === 'Viral')) ){\r\n            scenario.requireAppointment = true\r\n            scenario.appointment_type=\"diagnostic\"\r\n            \r\n        }\r\n        else if((scenario.complaint.symptoms.fever_temp === 3) && (scenario.class_fever_submit.predicted_fever_class === 'Bacterial')){\r\n            scenario.requireAppointment = true\r\n            scenario.appointment_type=\"offline\"\r\n            \r\n        }\r\n        else if((scenario.complaint.symptoms.fever_temp === 2) || (scenario.complaint.symptoms.fever_temp === 1))  {\r\n            scenario.requireAppointment = true\r\n            scenario.appointment_type=\"remote\"\r\n            \r\n        }\r\n        else {\r\n            scenario.requireAppointment = false\r\n            scenario.fev_classification_message=\"Mild symptoms detected. No appointment needed. Take care.\"\r\n        }\r\n\r\n    break;\r\n\r\n    default:\r\n        scenario.fev_classification_message=\"No classification required.\"\r\n}"
     },
     {
       "id": "b115eba0d821-28881fbc335ab7ca-c663",
       "type": "statement",
       "designer": {
-        "xLocation": 420,
+        "xLocation": 500,
         "yLocation": 720,
         "next": "e56f5130041e-93c7f90c69708171-5ba7"
       },
@@ -671,7 +648,7 @@
       "label": "Wait",
       "type": "wait",
       "designer": {
-        "xLocation": 600,
+        "xLocation": 500,
         "yLocation": 520,
         "next": "019b975fe260-23098dc376c9375f-9f3e"
       },
@@ -681,8 +658,8 @@
       "id": "bfea80e94249-a5f7f2e84aad1386-08ea",
       "type": "datasource",
       "designer": {
-        "xLocation": 827,
-        "yLocation": 560,
+        "xLocation": 980,
+        "yLocation": 574,
         "next": "ce857f903551-8b273dd96b9da821-3288",
         "reverse": false,
         "errorStepId": "b255051d3da5-22faf89272858b77-52c1"
@@ -706,8 +683,8 @@
       "type": "branch",
       "condition": "(scenario.class_covid_submit.covid_class === \"Low\") && (scenario.complaint.symptoms.fever === 1)",
       "designer": {
-        "xLocation": 809,
-        "yLocation": 480,
+        "xLocation": 794,
+        "yLocation": 500,
         "next": "ce857f903551-8b273dd96b9da821-3288"
       },
       "targetStepId": "bfea80e94249-a5f7f2e84aad1386-08ea",
@@ -728,10 +705,10 @@
     {
       "id": "a8155a0bee10-b053da32b5021ea4-2d70",
       "type": "branch",
-      "condition": "(scenario.class_covid_submit.covid_class === \"Low\") && (scenario.complaint.scenario.complaint.symptoms.fever === 0)",
+      "condition": "(scenario.class_covid_submit.covid_class === \"Low\") && (scenario.complaint.symptoms.fever === 0)",
       "designer": {
-        "xLocation": 900,
-        "yLocation": 668,
+        "xLocation": 960,
+        "yLocation": 686,
         "next": "fd1b13e85391-feddde08e2f2c2da-635d"
       },
       "label": "Low disposition check",
@@ -741,8 +718,8 @@
       "id": "d90319ede71c-05dfecb14f43d1f1-c267",
       "type": "statement",
       "designer": {
-        "xLocation": 1100,
-        "yLocation": 780,
+        "xLocation": 1071,
+        "yLocation": 740,
         "next": "e1531e3c1349-af359bdf95550d07-b0f4"
       },
       "text": "\"I feel you have a low dispostion at covid risk and also no serious fever symptoms. Would request you to take rest or get back when the severity of symptoms increases.\"",
@@ -754,8 +731,8 @@
       "type": "action",
       "label": "Update covid status",
       "designer": {
-        "xLocation": 940,
-        "yLocation": 772,
+        "xLocation": 969,
+        "yLocation": 786,
         "next": "8755bcef68d7-06ebb922904bb754-1947"
       },
       "onInit": "scenario.complaint.symptoms.covid_status=\"Low Risk - No Fever\""
@@ -772,34 +749,11 @@
       "onInit": "scenario.complaint.symptoms.covid_status = scenario.class_covid_submit.covid_class"
     },
     {
-      "id": "9b6495ce4132-bcf6ac15a9d68c8c-bf4f",
-      "type": "datasource",
-      "designer": {
-        "xLocation": 840,
-        "yLocation": 873,
-        "next": "e56f5130041e-93c7f90c69708171-5ba7",
-        "errorStepId": "e56f5130041e-93c7f90c69708171-5ba7"
-      },
-      "dataConnection": "",
-      "urlBase": "'http://52.172.158.219:8000/api'",
-      "urlPath": "/Tickets/status/update",
-      "urlParams": "",
-      "contentType": "raw",
-      "method": "post",
-      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
-      "payload": "{\r\n  \"ticket_id\": scenario.userData.ticket_id,\r\n  \"ticket_status\": \"closed\",\r\n  \"monitoring_days\": 0",
-      "opJson": true,
-      "opResolveWithFullResponse": false,
-      "response": "close_ticket",
-      "error": "close_ticket-error",
-      "label": "Close Ticket"
-    },
-    {
       "id": "bc8a804a3b47-ed83243b56f04e65-1789",
       "type": "datasource",
       "designer": {
-        "xLocation": 168,
-        "yLocation": 500,
+        "xLocation": 34,
+        "yLocation": 451,
         "next": "fb9290b1d44e-e0ce836048991989-13c3"
       },
       "dataConnection": "",
@@ -821,8 +775,8 @@
       "type": "action",
       "label": "convert data to complaint",
       "designer": {
-        "xLocation": 274,
-        "yLocation": 540,
+        "xLocation": 200,
+        "yLocation": 480,
         "next": "019b975fe260-23098dc376c9375f-9f3e"
       },
       "onInit": "scenario.complaint = scenario.latest_ticket_info.latest_ticket.symptoms\r\nscenario.complaint.symptoms = scenario.complaint.symptoms_info\r\ndelete scenario.complaint.symptoms_info\r\nscenario.complaint.comorbidities = scenario.complaint.co_morbidities\r\ndelete scenario.complaint.comorbidities\r\n\r\ndelete scenario.latest_ticket_info"
@@ -831,8 +785,8 @@
       "id": "6077fd509095-543f886547e1780e-e0e5",
       "type": "statement",
       "designer": {
-        "xLocation": 720,
-        "yLocation": 880,
+        "xLocation": 320,
+        "yLocation": 840,
         "next": "2d9c6e960882-8454bbbb2c223767-293a"
       },
       "text": "appointment",
@@ -842,9 +796,9 @@
       "id": "8755bcef68d7-06ebb922904bb754-1947",
       "type": "datasource",
       "designer": {
-        "xLocation": 953,
-        "yLocation": 860,
-        "next": "9b6495ce4132-bcf6ac15a9d68c8c-bf4f",
+        "xLocation": 807,
+        "yLocation": 872,
+        "next": "e56f5130041e-93c7f90c69708171-5ba7",
         "reverse": true,
         "errorStepId": "7aab50525866-037c50a79a76f112-8d39"
       },

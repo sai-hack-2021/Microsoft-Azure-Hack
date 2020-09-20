@@ -188,8 +188,9 @@
       "id": "3fb32f2b270c-70b770cb82c4a256-e9b7",
       "type": "statement",
       "designer": {
-        "xLocation": 1180,
-        "yLocation": 280
+        "xLocation": 1200,
+        "yLocation": 234,
+        "next": "83c4fb7a53c8-3fee98699ae9011c-6bed"
       },
       "text": "scenario.clinicDetails.Message",
       "label": "Remote appointment",
@@ -246,7 +247,7 @@
       "payload": "{\r\n    \"ticket_id\": scenario.ticketData.latest_ticket.ticket_id,\r\n    \"type\": scenario.scenarioArgs.appointment_type,\r\n    \"date\": scenario.booking_date,\r\n    \"time_slot\": scenario.booking_time\r\n}",
       "opJson": true,
       "opResolveWithFullResponse": false,
-      "label": "",
+      "label": "book appointment",
       "response": "appointment_book",
       "error": "appointment_book_error"
     },
@@ -271,6 +272,39 @@
       "text": "scenario.appointment_book.Message",
       "stringId": "stringId_c9e0dafcda2975d0",
       "label": "Booking success"
+    },
+    {
+      "id": "83c4fb7a53c8-3fee98699ae9011c-6bed",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 1253,
+        "yLocation": 420,
+        "errorStepId": "52021521d3f0-c8ecdc1f182d55cc-dd17"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://52.172.158.219:8000/api'",
+      "urlPath": "/Appointment/add",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.ticketData.latest_ticket.ticket_id,\r\n    \"type\": scenario.scenarioArgs.appointment_type\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "label": "book appointment",
+      "response": "appointment_book",
+      "error": "appointment_book_error"
+    },
+    {
+      "id": "52021521d3f0-c8ecdc1f182d55cc-dd17",
+      "type": "statement",
+      "designer": {
+        "xLocation": 1160,
+        "yLocation": 454
+      },
+      "text": "\"I think something went wrong during appointment booking.\"",
+      "label": "Appointment Booking_error",
+      "stringId": "stringId_b6fa4cbc95a1c748"
     }
   ],
   "interrupting": false,
