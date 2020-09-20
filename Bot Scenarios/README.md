@@ -4,7 +4,7 @@ The create these scenarios to build your healthcare bot using Microsoft healthca
 
 - Hi: Initial scenario to capture user details regarding their health after ticket is created. 
 
-![Image of Structure](https://github.com/sai-hack-2021/Microsoft-Azure-Hack/Bot%20Scenarios/Hi-scenario-structure.png)
+![Image of Structure](https://github.com/sai-hack-2021/Microsoft-Azure-Hack/blob/master/Bot%20Scenarios/Hi-scenario-structure.png)
 
 - sadtoseeyougo: Scenario created to handle appointments.
 
