@@ -1,4 +1,4 @@
-# Health First Prognosis Platform
+# Health Aid Prognosis Platform
 
 ## Problem to Solve :
 	1. Reduce the patients in clinic who have Low covid Risk and Low Fever and connect with doctor remotely to just give prescriptions so that there is no need to come to hospital or any nearby clinic.
