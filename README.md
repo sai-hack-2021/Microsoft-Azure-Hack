@@ -10,11 +10,11 @@ The Platform  has overall 3 components :
 2. Backend  : Flask and MongoDB
 3. Machine Learning Module Exposed as Microservice 
 
-**[View PPT](https://docs.google.com/presentation/d/1sP5DyX1s9E5kvmUoth2lh8EyMEjZrIjPrn2puZU9S3c/edit?usp=sharing)**
-**[View Platform](http://52.172.158.219/)**
-**View Use cases Design** : 
-**[View Platform Demo](https://www.dropbox.com/sh/43hta6wrzubek4a/AABTOjeJ_31XOQOjgj2b46Fga?dl=1)**   
-**[View Screenshots](https://www.dropbox.com/sh/vowilit195yyfc8/AAAGQVMBQ8nGlTzfXFbSZVOLa?dl=1)** 
+**[View PPT](https://docs.google.com/presentation/d/1sP5DyX1s9E5kvmUoth2lh8EyMEjZrIjPrn2puZU9S3c/edit?usp=sharing)** <br>
+**[View Platform](http://52.172.158.219/)**<br>
+**View Use cases Design** : <br>
+**[View Platform Demo](https://www.dropbox.com/sh/43hta6wrzubek4a/AABTOjeJ_31XOQOjgj2b46Fga?dl=1)**   <br>
+**[View Screenshots](https://www.dropbox.com/sh/vowilit195yyfc8/AAAGQVMBQ8nGlTzfXFbSZVOLa?dl=1)** <br>
 ## User Credentials : For Login
 
 1. User1
