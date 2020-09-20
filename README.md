@@ -28,6 +28,19 @@ The Platform  has overall 3 components :
 	 password : test159
 
 
+## Scoring Model : Covid-19 Risk
+
+- **Scoring Binned into 3 Categories** :
+	-  High 
+	- Medium 
+	- Low 
+
+1. The weights have been designed by carefully talking with domain experts and doctors who were treating covid patients 
+2.  The model will also take into consideration about the area percentages which are divided into 3 km radius
+3.  More Details about the scoring and **Decsion Making Scenarios** along with the machine learning model is given in the [Link.](https://docs.google.com/presentation/d/1Flq2x9tR15OR8lreEV-ZRMFGkN8BENEHF9KBmWlgWIo/edit?usp=sharing) 
+
+	
+	
 ## Machine Learning Model : Fever Classification 
 
 - **Multi - class : Classification** : 
@@ -40,20 +53,5 @@ The Platform  has overall 3 components :
 2. Considers the probability of similar patterns of the user in the same area and takes into account of the percentage of the type of fever pattern
 3. Takes into account of the similar patterns of the user classified as 
 4. Demographic Seasonality Variations of past 15 days 
-
-	
-	
-## Scoring Model : Covid-19 Risk
-
-- **Scoring Binned into 3 Categories** :
-	-  High 
-	- Medium 
-	- Low 
-
-1. The weights have been designed by carefully talking with domain experts and doctors who were treating covid patients 
-2.  The model will also take into consideration about the area percentages which are divided into 3 km radius
-3.  More Details about the scoring and **Decsion Making Scenarios** along with the machine learning model is given in the [Link.](https://docs.google.com/presentation/d/1Flq2x9tR15OR8lreEV-ZRMFGkN8BENEHF9KBmWlgWIo/edit?usp=sharing) 
-
-
 
 
