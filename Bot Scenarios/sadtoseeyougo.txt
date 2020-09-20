@@ -1,0 +1,279 @@
+{
+  "version": 3,
+  "steps": [
+    {
+      "id": "d352d1fc01cd-506d4aa1e8e7bd02-f178",
+      "type": "statement",
+      "designer": {
+        "xLocation": 639,
+        "yLocation": 76,
+        "next": "25ec1b6639ea-0b744454efe6ad98-608e"
+      },
+      "text": "\"We will help you now to book an appointment in the nearest facility.\"",
+      "stringId": "stringId_21a0f42e25edd7de",
+      "label": "Consultation Welcome"
+    },
+    {
+      "id": "25ec1b6639ea-0b744454efe6ad98-608e",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 611,
+        "yLocation": 149,
+        "errorStepId": "6e0d05a06413-ab05fae76f984340-4d6e",
+        "next": "1e9e29f36507-5cfd572b0cc2f059-3e21"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Tickets/latest",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"user_id\":scenario.scenarioArgs.userId\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "label": "Fetch Latest ticket",
+      "response": "ticketData",
+      "error": "data_fetch_error"
+    },
+    {
+      "id": "6e0d05a06413-ab05fae76f984340-4d6e",
+      "type": "statement",
+      "designer": {
+        "xLocation": 409,
+        "yLocation": 160
+      },
+      "text": "\"Data fetch error\"+scenario.data_fetch_error",
+      "stringId": "stringId_938aa4bd843765dd",
+      "label": "Ticket fetch error"
+    },
+    {
+      "id": "17b8e9233a7b-01e0bdac904a8efd-4da0",
+      "type": "switch",
+      "designer": {
+        "xLocation": 880,
+        "yLocation": 160
+      },
+      "cases": [
+        {
+          "value": "covid",
+          "targetStepId": "cc11c1bb4233-e32344efca8aeee7-ef39"
+        },
+        {
+          "value": "offline",
+          "targetStepId": "97935b4ddfff-95cd8bde04c3e958-1cc8"
+        },
+        {
+          "value": "diagnostic",
+          "targetStepId": "9de598b2743e-d33677abc6e45bae-1036"
+        },
+        {
+          "value": "remote",
+          "targetStepId": "3fb32f2b270c-70b770cb82c4a256-e9b7"
+        }
+      ],
+      "condition": "scenario.scenarioArgs.appointment_type",
+      "label": "Reroute on type"
+    },
+    {
+      "id": "1e9e29f36507-5cfd572b0cc2f059-3e21",
+      "type": "action",
+      "label": "Format date and time",
+      "designer": {
+        "xLocation": 674,
+        "yLocation": 200,
+        "next": "5fd3574e3057-b861fdfe854439b1-8d34"
+      },
+      "onInit": "scenario.currentDate = new Date(scenario.ticketData.latest_ticket.currentDate)\r\nscenario.available_dates = []\r\nscenario.available_time=[\"Morning [10am - 12pm]\", \"Afternoon [2pm - 4pm]\", \"Evening [6pm - 9pm]\"]\r\n\r\nfor(let i=1; i<4; i++){\r\n    var newDate = new Date()\r\n    newDate.setDate(scenario.currentDate.getDate()+i)\r\n    var dd = newDate.getDate();\r\n    var mm = newDate.getMonth()+1; \r\n    var yyyy = newDate.getFullYear();\r\n    scenario.available_dates.push(dd+\"/\"+mm+\"/\"+yyyy)\r\n}\r\n\r\ndelete scenario.currentDate"
+    },
+    {
+      "id": "5fd3574e3057-b861fdfe854439b1-8d34",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 640,
+        "yLocation": 300,
+        "next": "17b8e9233a7b-01e0bdac904a8efd-4da0",
+        "errorStepId": "8444462437ad-43b46f70da1b1ef6-6def"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Appointment/list",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n  \"type\": scenario.scenarioArgs.appointment_type,\r\n  \"ticket_id\": scenario.ticketData.latest_ticket.ticket_id\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "label": "Get Clinic Details",
+      "response": "clinicDetails",
+      "error": "clinicDetails-error"
+    },
+    {
+      "id": "8444462437ad-43b46f70da1b1ef6-6def",
+      "type": "statement",
+      "designer": {
+        "xLocation": 487,
+        "yLocation": 314
+      },
+      "text": "\"Data fetch error\"+scenario.scenario.clinicDetails-error",
+      "stringId": "stringId_938aa4bd843765dd",
+      "label": "clinicDetails-error"
+    },
+    {
+      "id": "97935b4ddfff-95cd8bde04c3e958-1cc8",
+      "type": "statement",
+      "designer": {
+        "xLocation": 887,
+        "yLocation": 280,
+        "next": "fd0ffb662b50-a8a383802601a1ba-8236"
+      },
+      "text": "Here are the nearest clinic I found near you.",
+      "layout": "vertical",
+      "attachment": [
+        {
+          "type": "Carousel",
+          "carouselCode": "(function(){\n    return [\n       new builder.ThumbnailCard().title(\"Doctor: \"+scenario.clinicDetails.Doctor).subtitle(\"Contact Number: \"+scenario.clinicDetails.Contact_Number).\n        text(\"Map link: \"+scenario.clinicDetails.Map_Link+\"\\n\" +\"Address: \"+scenario.clinicDetails.Nearest_Clinic + \"\\n\")\n    ] \n    })()\n"
+        }
+      ],
+      "stringId": "stringId_e8097e0b0096d4a4",
+      "label": "Clinic Details view"
+    },
+    {
+      "id": "cc11c1bb4233-e32344efca8aeee7-ef39",
+      "type": "statement",
+      "designer": {
+        "xLocation": 747,
+        "yLocation": 280,
+        "next": "fd0ffb662b50-a8a383802601a1ba-8236"
+      },
+      "text": "Here are the nearest covid ICMR testing place I found near you.",
+      "layout": "vertical",
+      "attachment": [
+        {
+          "type": "ThumbnailCard",
+          "title": "scenario.clinicDetails.Nearest_Covid_Center",
+          "titleStringId": "stringId_a330c51cd5fc2697",
+          "subtitle": "\"Map link: \"+scenario.clinicDetails.Map_Link+ \" ContactNumber: \"+scenario.clinicDetails.Contact_Number",
+          "subtitleStringId": "stringId_d2b78b66569c01e2"
+        }
+      ],
+      "stringId": "stringId_e8097e0b0096d4a4",
+      "label": "Covid Center Details view"
+    },
+    {
+      "id": "9de598b2743e-d33677abc6e45bae-1036",
+      "type": "statement",
+      "designer": {
+        "xLocation": 1027,
+        "yLocation": 280,
+        "next": "fd0ffb662b50-a8a383802601a1ba-8236"
+      },
+      "text": "Here are the nearest clinic and diagnostic center I found near you.",
+      "layout": "vertical",
+      "attachment": [
+        {
+          "type": "Carousel",
+          "carouselCode": "(function(){\n    return [\n       new builder.ThumbnailCard().title(\"Doctor: \"+scenario.clinicDetails.Doctor).subtitle(\"Contact Number: \"+scenario.clinicDetails.Clinic_Contact_Number).\n        text(\"Map link: \"+scenario.clinicDetails.Nearest_Clinic_Map_Link+\"\\n\" +\"Address: \"+scenario.clinicDetails.Nearest_Clinic + \"\\n\")\n    ] \n    })()\n"
+        },
+        {
+          "type": "Carousel",
+          "carouselCode": "(function(){\n    return [\n       new builder.ThumbnailCard().title(\"Diagnostic Center: \"+scenario.clinicDetails.Diagnostic_Center).subtitle(\"Contact Number: \"+scenario.clinicDetails.Diagnostic_Center_Contact_Number).\n        text(\"Map link: \"+scenario.clinicDetails.Diagnostic_Center_Map_Link)\n    ] \n    })()\n"
+        }
+      ],
+      "stringId": "stringId_e8097e0b0096d4a4",
+      "label": "Diagnostic_clinic view"
+    },
+    {
+      "id": "3fb32f2b270c-70b770cb82c4a256-e9b7",
+      "type": "statement",
+      "designer": {
+        "xLocation": 1180,
+        "yLocation": 280
+      },
+      "text": "scenario.clinicDetails.Message",
+      "label": "Remote appointment",
+      "stringId": "stringId_f8508f576cd3f742"
+    },
+    {
+      "id": "fd0ffb662b50-a8a383802601a1ba-8236",
+      "type": "prompt",
+      "dataType": "string",
+      "designer": {
+        "xLocation": 940,
+        "yLocation": 409,
+        "next": "56bec3924bb5-3ef5d8be753da2f6-1dc8"
+      },
+      "text": "\"What day works for you?\"",
+      "variable": "booking_date",
+      "submitTitle": "Submit",
+      "label": "Date?",
+      "suggestions": "scenario.available_dates",
+      "stringId": "stringId_3dc6265dd6a887d5"
+    },
+    {
+      "id": "56bec3924bb5-3ef5d8be753da2f6-1dc8",
+      "type": "prompt",
+      "dataType": "string",
+      "designer": {
+        "xLocation": 1060,
+        "yLocation": 433,
+        "next": "3d6dd67c1756-173b94d52ae8fe05-cf96"
+      },
+      "text": "\"What time of the day works for you?\"",
+      "variable": "booking_time",
+      "submitTitle": "Submit",
+      "label": "Time?",
+      "suggestions": "scenario.available_time",
+      "stringId": "stringId_3dc6265dd6a887d5"
+    },
+    {
+      "id": "3d6dd67c1756-173b94d52ae8fe05-cf96",
+      "type": "datasource",
+      "designer": {
+        "xLocation": 1060,
+        "yLocation": 500,
+        "errorStepId": "8cdd383b58f9-ac968146ba632b0e-2d13",
+        "next": "e9a34b10bd59-864319b486a09938-f578"
+      },
+      "dataConnection": "",
+      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlPath": "/Appointment/add",
+      "urlParams": "",
+      "contentType": "raw",
+      "method": "post",
+      "headers": "{\r\n    \"auth-key\":\"4ygdf5gthhyxx#45\"\r\n}",
+      "payload": "{\r\n    \"ticket_id\": scenario.ticketData.latest_ticket.ticket_id,\r\n    \"type\": scenario.scenarioArgs.appointment_type,\r\n    \"date\": scenario.booking_date,\r\n    \"time_slot\": scenario.booking_time\r\n}",
+      "opJson": true,
+      "opResolveWithFullResponse": false,
+      "label": "",
+      "response": "appointment_book",
+      "error": "appointment_book_error"
+    },
+    {
+      "id": "8cdd383b58f9-ac968146ba632b0e-2d13",
+      "type": "statement",
+      "designer": {
+        "xLocation": 860,
+        "yLocation": 533
+      },
+      "text": "\"I think something went wrong during appointment booking.\"",
+      "label": "Appointment Booking_error",
+      "stringId": "stringId_b6fa4cbc95a1c748"
+    },
+    {
+      "id": "e9a34b10bd59-864319b486a09938-f578",
+      "type": "statement",
+      "designer": {
+        "xLocation": 1060,
+        "yLocation": 580
+      },
+      "text": "scenario.appointment_book.Message",
+      "stringId": "stringId_c9e0dafcda2975d0",
+      "label": "Booking success"
+    }
+  ],
+  "interrupting": false,
+  "breaking": false,
+  "returningMessage": ""
+}
