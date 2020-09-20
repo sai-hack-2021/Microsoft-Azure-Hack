@@ -12,7 +12,7 @@
         "errorStepId": "c47c49d8abd6-9d041e76bf3898c4-0ce0"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "'/Users/'+scenario.scenarioArgs.userId",
       "urlParams": "",
       "method": "get",
@@ -90,7 +90,7 @@
         "errorStepId": "8fcb6d343579-aa73e6bd411c70d0-03d1"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/symptoms/update",
       "urlParams": "",
       "contentType": "raw",
@@ -501,7 +501,7 @@
         "errorStepId": "fbb8de270293-ccca71db730a90b4-b217"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/symptoms/update",
       "urlParams": "",
       "contentType": "raw",
@@ -596,7 +596,7 @@
         "errorStepId": "b115eba0d821-28881fbc335ab7ca-c663"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Scoring/score",
       "urlParams": "",
       "contentType": "raw",
@@ -619,7 +619,7 @@
         "errorStepId": "fbb8de270293-ccca71db730a90b4-b217"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/status/update",
       "urlParams": "",
       "contentType": "raw",
@@ -688,7 +688,7 @@
         "errorStepId": "b255051d3da5-22faf89272858b77-52c1"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Classifier/classify",
       "urlParams": "",
       "contentType": "raw",
@@ -781,7 +781,7 @@
         "errorStepId": "e56f5130041e-93c7f90c69708171-5ba7"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/status/update",
       "urlParams": "",
       "contentType": "raw",
@@ -803,7 +803,7 @@
         "next": "fb9290b1d44e-e0ce836048991989-13c3"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/latest",
       "urlParams": "",
       "contentType": "raw",
@@ -849,7 +849,7 @@
         "errorStepId": "7aab50525866-037c50a79a76f112-8d39"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/symptoms/update",
       "urlParams": "",
       "contentType": "raw",

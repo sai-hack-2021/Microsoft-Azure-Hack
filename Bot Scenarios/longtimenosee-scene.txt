@@ -10,7 +10,7 @@
         "next": "b08ae9ebca7c-cc98feed2cb35c60-f843"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "'/Users/'+scenario.scenarioArgs.userId",
       "urlParams": "",
       "method": "get",
@@ -59,7 +59,7 @@
         "next": "e5979669ca06-0f433bd89c2dd51e-61c0"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "\"/Tickets/status/update\"",
       "urlParams": "",
       "contentType": "raw",
@@ -161,7 +161,7 @@
         "next": "fdad224a1c6e-6fe7d5441e498821-c295"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "\"/Tickets/latest\"",
       "urlParams": "",
       "method": "post",
@@ -201,7 +201,7 @@
         "next": "e5979669ca06-0f433bd89c2dd51e-61c0"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/status/update",
       "urlParams": "",
       "contentType": "raw",
@@ -247,7 +247,7 @@
         "reverse": true
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Appointment/add",
       "urlParams": "",
       "contentType": "raw",
@@ -269,7 +269,7 @@
         "next": "b9a63d708ac7-bb3fc21adbf56d52-4e30"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Appointment/list",
       "urlParams": "",
       "contentType": "raw",

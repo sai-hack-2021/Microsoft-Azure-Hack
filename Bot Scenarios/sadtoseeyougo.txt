@@ -23,7 +23,7 @@
         "next": "1e9e29f36507-5cfd572b0cc2f059-3e21"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Tickets/latest",
       "urlParams": "",
       "contentType": "raw",
@@ -96,7 +96,7 @@
         "errorStepId": "8444462437ad-43b46f70da1b1ef6-6def"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Appointment/list",
       "urlParams": "",
       "contentType": "raw",
@@ -237,7 +237,7 @@
         "next": "e9a34b10bd59-864319b486a09938-f578"
       },
       "dataConnection": "",
-      "urlBase": "'http://13.71.28.167:8000/api'",
+      "urlBase": "'http://52.172.158.219:8000/api'",
       "urlPath": "/Appointment/add",
       "urlParams": "",
       "contentType": "raw",
