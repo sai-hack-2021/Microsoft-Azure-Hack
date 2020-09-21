@@ -37,7 +37,6 @@ def token_required(f):
         if token !='4ygdf5gthhyxx#45':
             return  {"message":"Invalid token : access Denied"}, 401
 
-
         return  f(*args,**kwargs)
 
     return check

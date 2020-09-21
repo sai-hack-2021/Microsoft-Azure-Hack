@@ -15,12 +15,16 @@ import Stats from "./Stats";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Tickets from "./Tickets";
+import TicketDetails from "./TicketDetails";
 import SweetAlert from "sweetalert2-react";
+import Profile from "./Profile";
 
 const drawerWidthVal = 280;
 
 const styleIframe = {
   border: "1px solid red",
+  padding: 0,
+  margin: 0,
 };
 
 const useStyles = makeStyles(() => ({
@@ -66,12 +70,29 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     border: "none",
   },
+  modalTop: {
+    width: "100%",
+    borderBottom: "1px solid rgba(1,1,1,0.1)",
+    background: "white",
+    paddingRight: "10px",
+    height: "60px",
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "20px",
+    fontSize: "1.4em",
+  },
   modalContent: {
     display: "flex",
     flexDirection: "column",
     border: "none",
-    padding: "5px 20px",
+    padding: "20px 20px",
     background: "white",
+  },
+  modalBtnClose: {
+    marginLeft: "auto",
+    width: "20px",
+    fontSize: "1.8em",
+    cursor: "pointer",
   },
   router: {
     paddingTop: "65px",
@@ -86,8 +107,6 @@ const useStyles = makeStyles(() => ({
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
-  const [url, setUrl] = React.useState();
-
   const [openModal, setOpenModal] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -146,6 +165,13 @@ export default function PersistentDrawerLeft() {
           />
           <Route
             exact
+            path="/profile"
+            render={(props) => {
+              return <Profile />;
+            }}
+          />
+          <Route
+            exact
             path="/tickets"
             render={(props) => {
               return (
@@ -156,10 +182,8 @@ export default function PersistentDrawerLeft() {
               );
             }}
           />
-
           <Route
-            exact
-            path="/tickets/details"
+            path="/tickets/details/"
             render={(props) => {
               return <TicketDetails />;
             }}
@@ -169,7 +193,7 @@ export default function PersistentDrawerLeft() {
             exact
             path="/"
             render={(props) => {
-              return <Redirect to="/tickets" />;
+              return <Redirect to="/profile" />;
             }}
           />
         </div>
@@ -192,18 +216,28 @@ export default function PersistentDrawerLeft() {
           <Fade in={openModal}>
             <div className={classes.paper}>
               <div id="transition-modal-description">
+                <div className={classes.modalTop}>
+                  <div>HealthAidBot</div>
+                  <div
+                    onClick={handleCloseModal}
+                    className={classes.modalBtnClose}
+                  >
+                    &times;
+                  </div>
+                </div>
                 <div className={classes.modalContent}>
                   <Iframe
                     style={styleIframe}
-                    url={`https://healthaidbot.azurewebsites.net/?userId=${localStorage.getItem(
+                    url={`http://healthaidbot.southindia.azurecontainer.io:8080/?userId=${localStorage.getItem(
                       "userId"
                     )}`}
-                    width="500px"
-                    height="600px"
+                    width="650px"
+                    height="550px"
                     id="myId"
                     className="myClassname"
                     display="initial"
                     position="relative"
+                    frameBorder="0"
                   />
                 </div>
               </div>

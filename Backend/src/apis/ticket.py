@@ -236,7 +236,7 @@ class getTicketHistory(Resource):
 
             final = []
 
-            for i in collection.find({"user_id":int(payload['user_id'])}):
+            for i in collection.find({"user_id":int(payload['user_id'])}).sort([('currentDate',-1)]):
 
                 i['ticket_id'] = i.pop('_id')
                 final.append(i)
@@ -270,8 +270,18 @@ class updateSymptoms(Resource):
         #parsing
 
         try:
+            if "covid_status" in payload['symptoms']['symptoms'] :
 
-            collection.update_one({"_id":int(payload['ticket_id'])},{"$set":{"symptoms":payload['symptoms'],"ticket_status":"in-progress"}})
+                if payload['symptoms']['symptoms']["covid_status"] == 'Low Risk - No Fever':
+                    collection.update_one({"_id": int(payload['ticket_id'])},
+                                      {"$set": {"symptoms": payload['symptoms'], "ticket_status": "closed"}})
+                else:
+
+                    collection.update_one({"_id": int(payload['ticket_id'])},
+                                          {"$set": {"symptoms": payload['symptoms']}})
+            else:
+
+                collection.update_one({"_id":int(payload['ticket_id'])},{"$set":{"symptoms":payload['symptoms'],"ticket_status":"in-progress"}})
 
 
             return {'message':'success'},200

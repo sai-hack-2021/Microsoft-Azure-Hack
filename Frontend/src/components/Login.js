@@ -139,7 +139,7 @@ const Login = () => {
             <div className={classes.leftText}>
               <h1>WELCOME BACK</h1>
               <p>Please login with your details to use our services</p>
-              <button onClick={switchSides}>Click Me</button>
+              {/* <button onClick={switchSides}>Click Me</button> */}
             </div>
           </div>
           <div className={`${classes.right} ${orderRight}`}>
@@ -155,6 +155,7 @@ const Login = () => {
                 <input
                   placeholder="email"
                   value={loginData["e-mail"]}
+                  style={{ width: "100%" }}
                   name="e-mail"
                 />
               </div>
@@ -165,7 +166,7 @@ const Login = () => {
                 <input
                   placeholder="password"
                   value={loginData["password"]}
-                  className={classes.input}
+                  style={{ width: "100%" }}
                   type="password"
                   name="password"
                 />

@@ -90,7 +90,7 @@ class GetUser(Resource):
 
             value = collection.find_one({'_id':int(id)})
 
-            active_ticket  = ticket_collection.find({'user_id':int(id)},limit=2).sort([('currentDate',-1)])[0]
+            active_ticket  = ticket_collection.find({'user_id':int(id)}).sort([('currentDate',-1)])
 
 
             if isinstance(active_ticket,list):
@@ -99,6 +99,7 @@ class GetUser(Resource):
                 pass
             else:
                 active_ticket = False
+
             if value:
 
                 value['user_id'] = value["_id"]
