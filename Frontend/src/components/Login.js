@@ -155,6 +155,7 @@ const Login = () => {
                 <input
                   placeholder="email"
                   value={loginData["e-mail"]}
+                  style={{ width: "100%" }}
                   name="e-mail"
                 />
               </div>
@@ -165,7 +166,7 @@ const Login = () => {
                 <input
                   placeholder="password"
                   value={loginData["password"]}
-                  className={classes.input}
+                  style={{ width: "100%" }}
                   type="password"
                   name="password"
                 />
